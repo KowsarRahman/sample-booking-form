@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ReactEventHandler, useState } from 'react';
+import Form from './components/Form';
+import { NamesBook } from './components/nameBook';
 
 function App() {
+
+  const [name, setName] = useState<string>("");
+  const [names, setNames ] = useState<Array<NamesBook>>([]);
+
+  const handleAdd:ReactEventHandler = (e) => {
+
+    e.preventDefault();
+    if(name) {
+      setNames([...names, {id: Date.now(), name: name, isDone: true}]);
+      setName("");
+    }
+
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form name={name} setName={setName} handleAdd={handleAdd} names={names} setNames={setNames}/>
     </div>
   );
 }
